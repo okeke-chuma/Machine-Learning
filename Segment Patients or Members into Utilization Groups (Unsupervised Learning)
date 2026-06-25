@@ -1,0 +1,77 @@
+Project 3 — Segment Patients or Members into Utilization Groups (Unsupervised Learning)
+Software: Orange
+Goal: Use clustering to group patients into meaningful segments such as:
+
+  high utilizers
+  chronic disease management patients
+  low-utilization preventive-care users
+  complex multi-condition patients
+
+Example Question:
+
+Can we segment patients into clinically or operationally meaningful utilization groups based on utilization, cost, and disease burden?
+
+Features/Data Fields:
+  total visits
+  ED visits
+  inpatient admits
+  chronic condition count
+  total cost
+  number of medications
+  age
+  risk score if available
+
+Orange Workflow:
+  Widgets
+  File
+  Select Columns
+  Impute
+  Normalize
+  k-Means
+  Hierarchical Clustering (optional)
+  PCA
+  t-SNE
+  Scatter Plot
+  Data Table
+  Box Plot
+  Silhouette Plot if available depending on version / add-ons
+
+Step-by-Step Instructions
+Step 1: Load and Clean
+  Use: File → Select Columns → Impute → Normalize
+  For clustering, scaling matters because variables like total cost can dominate.
+
+Step 2: Build Clusters
+  Add k-Means
+  Connect Normalize → k-Means
+  Start with k = 3, then test k = 4 and k = 5
+
+Step 3: Visualize Clusters
+Add:
+  PCA
+  t-SNE
+  Scatter Plot
+Connect:
+  Normalize → PCA
+  Normalize → t-SNE
+  k-Means → Scatter Plot (or connect clustering output into PCA/t-SNE views depending on your Orange version)
+  You want to color points by cluster membership.
+
+Step 4: Profile the Clusters
+  Use:  Box Plot, Data Table, Distributions
+  Compare each cluster on:
+        average cost
+        average ED visits
+        average inpatient stays
+        medication burden
+        age
+Example Interpretation
+
+You may find:
+
+  Cluster 1: younger, low-cost, low-utilization patients
+  Cluster 2: moderate chronic burden, recurring outpatient use
+  Cluster 3: high-cost, high-ED, high-admission patients
+
+Then you can frame it as: 
+  “The clustering analysis revealed a small high-risk segment with elevated inpatient and emergency utilization, suggesting a candidate population for case management or care coordination interventions.”
