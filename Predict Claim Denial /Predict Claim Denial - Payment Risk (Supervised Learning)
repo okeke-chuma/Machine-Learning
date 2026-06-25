@@ -1,0 +1,32 @@
+Predict Claim Denial / Payment Risk (Supervised Learning)
+Goal: Build a model that predicts whether a healthcare claim will be denied or paid late.
+Software: Orange
+
+Relevant for healthcare finance / revenue cycle / payer analytics work.
+
+Example Target
+claim_denied = Yes / No
+
+Example Features/Data Fields
+  payer type
+  service category
+  diagnosis count
+  CPT category
+  place of service
+  claim amount
+  provider specialty
+  prior denial history
+  submission lag days
+
+
+Use the same core workflow as Project 1 (Supervised Learning project → Outcome Prediction):
+
+File → Select Columns → Impute → Continuize → Rank → Logistic Regression / Tree / Random Forest → Test & Score → Confusion Matrix → ROC Analysis
+
+Business Value:
+Frame the project as:
+
+  identifying denial risk earlier
+  reducing rework
+  improving reimbursement cycle
+  prioritizing claims for manual review
