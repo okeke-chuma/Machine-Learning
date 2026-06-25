@@ -1,0 +1,144 @@
+Project 1 — Predict Patient Readmission Risk (Supervised Learning)
+Goal: Use patient encounter or hospital data to predict whether a patient will be readmitted within 30 days. (Use Orange Software), Healthcare Analytics
+Software: Orange
+
+Example Question : Can we predict whether a patient will be readmitted based on demographics, diagnosis, utilization, LOS, and discharge characteristics?
+
+Possible Dataset Sources
+  Diabetes 130-US hospitals dataset (very common for readmission projects) - https://archive.ics.uci.edu/dataset/296/diabetes+130-us+hospitals+for+years+1999-2008
+  Any de-identified hospital/claims-like CSV
+  Public readmission datasets from Kaggle/UCI - https://www.kaggle.com/datasets/dubradave/hospital-readmissions
+  CMS Hospital Readmissions Reduction Program - https://data.cms.gov/provider-data/dataset/9n3s-kdb3
+
+Target Variable/ Data Fields 
+  Readmitted → Yes / No
+
+Features You Might Use
+  age
+  gender
+  length of stay
+  number of medications
+  number of diagnoses
+  prior inpatient visits
+  emergency visits
+  primary diagnosis category
+  discharge disposition
+  A1C result / lab abnormality flags if available
+
+
+Orange Workflow.
+Widgets to Use
+  File
+  Data Table
+  Select Columns
+  Edit Domain (optional)
+  Impute
+  Continuize
+  Rank
+  Logistic Regression
+  Tree
+  Random Forest
+  Test & Score
+  Confusion Matrix
+  ROC Analysis
+  Predictions
+  Feature Importance or Nomogram if available
+
+
+Step-by-Step Instructions
+
+Step 1: Import the Data
+  Drag File onto the canvas.
+  Load your CSV dataset.
+  Connect File → Data Table to inspect the data.
+  Check: Is the target column present?, Are missing values obvious?, Are categorical columns properly recognized?
+
+Step 2: Set the Target and Clean the Data
+  Add Select Columns.
+  Move your outcome variable (readmitted) into Target.
+  Move ID columns (patient ID, encounter ID) to Meta so they don’t influence the model.
+  Keep predictive variables in Features.
+  
+  Then add:
+  Impute → fills missing values
+  Continuize → converts categorical variables to numeric format for algorithms like logistic regression
+
+Recommended flow:
+  File → Select Columns → Impute → Continuize
+
+Step 3: Explore Which Features Matter
+  Add Rank after preprocessing.
+  Use information gain / Gini / ANOVA ranking to see which variables are most predictive.
+
+Note the top features:
+  prior admissions
+  LOS
+  number of medications
+  diagnosis category
+  discharge disposition
+
+This helps you explain the business/clinical interpretation.
+
+Step 4: Train Multiple Models
+
+Add 3 learner widgets:
+
+  Logistic Regression
+  Tree
+  Random Forest
+
+  Connect them to the preprocessed data pipeline.
+
+Example structure:
+
+  Continuize → Logistic Regression
+  Continuize → Tree
+  Continuize → Random Forest
+
+Step 5: Evaluate Models
+
+Add Test & Score and connect:
+
+preprocessed data to Test & Score
+all 3 models to Test & Score
+
+Inside Test & Score:
+
+Choose Cross Validation
+Set folds to 10
+
+Metrics to compare:
+
+  AUC
+  CA (classification accuracy)
+  F1
+  Precision
+  Recall
+
+Step 6: Review Errors and ROC
+
+From Test & Score, connect to:
+
+  Confusion Matrix
+  ROC Analysis
+  What to look at
+
+Confusion Matrix
+
+  True positives = correctly predicted readmissions
+  False negatives = missed readmissions → often the most important in healthcare
+
+ROC Curve
+
+  Compare the curves for Logistic Regression vs Tree vs Random Forest
+  Higher AUC generally means better separation
+
+Step 7: Interpret the Best Model
+
+If Random Forest performs best:
+
+note that it captured non-linear relationships and interactions
+
+If Logistic Regression performs similarly:
+
+note that it may be easier to explain operationally
