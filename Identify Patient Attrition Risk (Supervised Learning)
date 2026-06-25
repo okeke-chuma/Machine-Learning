@@ -1,0 +1,29 @@
+Project 4 — Identify Patient Attrition Risk (Supervised Learning)
+
+Patient attrition for appointments is the rate at which patients stop returning to a practice for ongoing care. 
+Heavily driven by missed appointments, single no-shows, cancellationns
+
+Goal: Predict whether a patient will miss an appointment or stop returining to a practice for ongoing care. 
+
+Target
+Attrition = Yes / No
+
+Features
+  Age
+  Gender
+  Schecule lead time
+  Transportation (Yes/No)
+  Employment status/ income
+  Time conflict
+  Work conflict
+  Distance from home
+  Health Perception
+  Job satisfaction
+
+
+Works in Orange because for a classification project you can compare:
+  logistic regression
+  decision tree
+  random forest
+
+Provides strong visuals for confusion matrices and ROC curves.
